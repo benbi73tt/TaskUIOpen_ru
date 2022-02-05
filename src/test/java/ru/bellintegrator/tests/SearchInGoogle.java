@@ -1,6 +1,5 @@
 package ru.bellintegrator.tests;
 
-import exception.ElementNotFound;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -24,8 +23,6 @@ public class SearchInGoogle extends BaseTest {
     ;
     protected HomeGoogle homeGoogle = PageFactory.initElements(driver, HomeGoogle.class);
     protected BankOpen bankOpen = PageFactory.initElements(driver, BankOpen.class);
-    protected Set<String> windowsSet = driver.getWindowHandles();
-    protected List<String> windowsList = new ArrayList<>(windowsSet);
     private int size = driver.getWindowHandles().size();
 
 
@@ -42,20 +39,20 @@ public class SearchInGoogle extends BaseTest {
         waitWindow();
         switchTo(BANK_OPEN);
 
-        System.out.println(bankOpen.getUSD().getText());
         Assertions.assertEquals(driver.getTitle(), BANK_OPEN);
-        System.out.println(bankOpen.getCurrency().get(1).findElement(By.xpath("//td[2]//span[@class='main-page-exchange__rate']")).getText());
         buyAndSellCurrency();
     }
 
 
     public void buyAndSellCurrency() {
         bankOpen.getCurrency().stream().forEach(x -> {
-            String name = x.findElement(By.xpath("//span[@class='ant-typography open-ui-text open-ui-text-theme-default largeText main-page-exchange__currency-name']")).getText();
-            String buy = x.findElement(By.xpath("//td[2]//span[@class='main-page-exchange__rate']")).getText();
-            String sale = x.findElement(By.xpath("//td[4]//span[@class='main-page-exchange__rate']")).getText();
-//            Assertions.assertTrue(buy < sale);
+            String name = x.findElement(By.xpath(".//span[@class='ant-typography open-ui-text open-ui-text-theme-default largeText main-page-exchange__currency-name']")).getText();
+            String buy = x.findElement(By.xpath(".//td[2]//span[@class='main-page-exchange__rate']")).getText();
+            String sale = x.findElement(By.xpath(".//td[4]//span[@class='main-page-exchange__rate']")).getText();
             System.out.println(name + " " + buy + " Покупка " + " / " + sale + " Продажа");
+            double dBuy = Double.parseDouble(buy.replaceAll(",","."));
+            double dSale = Double.parseDouble(sale.replaceAll(",","."));
+            Assertions.assertTrue(dBuy < dSale);
         });
     }
 
