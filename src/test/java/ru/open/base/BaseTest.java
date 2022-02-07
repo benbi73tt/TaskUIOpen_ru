@@ -1,8 +1,6 @@
-package ru.bellintegrator.base;
+package ru.open.base;
 
 import common.CommonActions;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import pages.BasePage;
 
