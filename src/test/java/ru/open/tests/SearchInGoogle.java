@@ -9,7 +9,8 @@ import pages.TestModule;
 import ru.open.base.BaseTest;
 
 import java.time.Duration;
-import java.util.stream.Stream;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static constant.ConstantTitle.BANK_OPEN;
 import static constant.ConstantURL.GOOGLE_PAGE;
@@ -33,13 +34,13 @@ public class SearchInGoogle extends BaseTest {
     }
 
 
-    public Stream<Boolean> compareBuyAndSell() {
+    public List<String> compareBuyAndSell() {
        return testModule.getCurrency().stream().map(x -> {
             double buy = Double.parseDouble(x[0].replaceAll(",", "."));
             double sale = Double.parseDouble(x[1].replaceAll(",", "."));
             Assertions.assertTrue(buy < sale);
-            return buy < sale;
-        });
+            return buy + " " + sale;
+        }).collect(Collectors.toList());
     }
 
     public String switchTo(String str) {

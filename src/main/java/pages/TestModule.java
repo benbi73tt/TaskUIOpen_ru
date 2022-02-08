@@ -31,14 +31,17 @@ public class TestModule extends BasePage {
     @FindBy(how = How.XPATH, using = "//tbody//tr[@class='main-page-exchange__row main-page-exchange__row--with-border']")
     List<WebElement> currency;
 
+    By buy = By.xpath(".//td[2]//span[@class='main-page-exchange__rate']");
+    By sell = By.xpath(".//td[4]//span[@class='main-page-exchange__rate']");
+
 
 
     public List<String[]> getCurrency() {
         List<String[]> buyAndSell = new ArrayList();
         currency.stream().forEach(x -> {
             buyAndSell.add(new String[]
-                    { x.findElement(By.xpath(".//td[2]//span[@class='main-page-exchange__rate']")).getText(),
-                     x.findElement(By.xpath(".//td[4]//span[@class='main-page-exchange__rate']")).getText()});
+                    { x.findElement(buy).getText(),
+                     x.findElement(sell).getText()});
         });
         return buyAndSell;
     }
